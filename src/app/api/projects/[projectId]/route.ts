@@ -10,7 +10,7 @@ export async function GET(
     const db = await initDb({ env: { DB: request.nextUrl.searchParams.get('_db') } });
     const dbService = new DbService(db);
     
-    const project = await dbService.getProjectById(params.id);
+    const project = await dbService.getProjectById(params.projectId);
     
     if (!project) {
       return NextResponse.json({ error: 'Project not found' }, { status: 404 });
@@ -34,7 +34,7 @@ export async function PUT(
     const body = await request.json();
     const { name, client, status } = body;
     
-    const project = await dbService.updateProject(params.id, { name, client, status });
+    const project = await dbService.updateProject(params.projectId, { name, client, status });
     
     if (!project) {
       return NextResponse.json({ error: 'Project not found' }, { status: 404 });
